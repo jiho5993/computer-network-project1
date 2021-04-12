@@ -175,7 +175,7 @@ void http_handler(int clnt_sock) {
         error("read error");
     }
 
-    // printf("%s\n", buf);
+    printf("%s", buf);
     write(log_fd, NEW_LOG_LINE, strlen(NEW_LOG_LINE));
     write(log_fd, buf, strlen(buf));
 

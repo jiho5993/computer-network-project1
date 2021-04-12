@@ -1,72 +1,22 @@
 ========================== REQUEST
 GET / HTTP/1.1
 Host: localhost:3000
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:87.0) Gecko/20100101 Firefox/87.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
 Connection: keep-alive
-Cache-Control: max-age=0
-sec-ch-ua: "Google Chrome";v="89", "Chromium";v="89", ";Not A Brand";v="99"
-sec-ch-ua-mobile: ?0
 Upgrade-Insecure-Requests: 1
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
-Sec-Fetch-Site: none
-Sec-Fetch-Mode: navigate
-Sec-Fetch-User: ?1
-Sec-Fetch-Dest: document
-Accept-Encoding: gzip, deflate, br
-Accept-Language: ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7
-Cookie: _xsrf=2|f1769528|1f96548a90d17cd2eccd0914f8a63107|1615879530; username-localhost-8888="2|1:0|10:1617692701|23:username-localhost-8888|44:Mzc4Y2Q0NTdmYWUyNDQ0M2E0YjU0M2IzOTg5ZWM5MmU=|82d037ad9dca1df3e1f6794a42ec04f8fd59f37c9126db0e6269f7bba51670c7"
+Cache-Control: max-age=0
 
 ========================== REQUEST
 GET /src/giphy.gif HTTP/1.1
 Host: localhost:3000
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:87.0) Gecko/20100101 Firefox/87.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
 Connection: keep-alive
-sec-ch-ua: "Google Chrome";v="89", "Chromium";v="89", ";Not A Brand";v="99"
-sec-ch-ua-mobile: ?0
-Upgrade-Insecure-Requests: 1
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
-Sec-Fetch-Site: same-origin
-Sec-Fetch-Mode: navigate
-Sec-Fetch-User: ?1
-Sec-Fetch-Dest: document
 Referer: http://localhost:3000/
-Accept-Encoding: gzip, deflate, br
-Accept-Language: ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7
-Cookie: _xsrf=2|f1769528|1f96548a90d17cd2eccd0914f8a63107|1615879530; username-localhost-8888="2|1:0|10:1617692701|23:username-localhost-8888|44:Mzc4Y2Q0NTdmYWUyNDQ0M2E0YjU0M2IzOTg5ZWM5MmU=|82d037ad9dca1df3e1f6794a42ec04f8fd59f37c9126db0e6269f7bba51670c7"
-
-========================== REQUEST
-GET /src/Lenna.jpeg HTTP/1.1
-Host: localhost:3000
-Connection: keep-alive
-sec-ch-ua: "Google Chrome";v="89", "Chromium";v="89", ";Not A Brand";v="99"
-sec-ch-ua-mobile: ?0
 Upgrade-Insecure-Requests: 1
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
-Sec-Fetch-Site: same-origin
-Sec-Fetch-Mode: navigate
-Sec-Fetch-User: ?1
-Sec-Fetch-Dest: document
-Referer: http://localhost:3000/
-Accept-Encoding: gzip, deflate, br
-Accept-Language: ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7
-Cookie: _xsrf=2|f1769528|1f96548a90d17cd2eccd0914f8a63107|1615879530; username-localhost-8888="2|1:0|10:1617692701|23:username-localhost-8888|44:Mzc4Y2Q0NTdmYWUyNDQ0M2E0YjU0M2IzOTg5ZWM5MmU=|82d037ad9dca1df3e1f6794a42ec04f8fd59f37c9126db0e6269f7bba51670c7"
-
-========================== REQUEST
-GET /src/dummy.pdf HTTP/1.1
-Host: localhost:3000
-Connection: keep-alive
-sec-ch-ua: "Google Chrome";v="89", "Chromium";v="89", ";Not A Brand";v="99"
-sec-ch-ua-mobile: ?0
-Upgrade-Insecure-Requests: 1
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
-Sec-Fetch-Site: same-origin
-Sec-Fetch-Mode: navigate
-Sec-Fetch-User: ?1
-Sec-Fetch-Dest: document
-Referer: http://localhost:3000/
-Accept-Encoding: gzip, deflate, br
-Accept-Language: ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7
-Cookie: _xsrf=2|f1769528|1f96548a90d17cd2eccd0914f8a63107|1615879530; username-localhost-8888="2|1:0|10:1617692701|23:username-localhost-8888|44:Mzc4Y2Q0NTdmYWUyNDQ0M2E0YjU0M2IzOTg5ZWM5MmU=|82d037ad9dca1df3e1f6794a42ec04f8fd59f37c9126db0e6269f7bba51670c7"
 
