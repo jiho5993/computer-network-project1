@@ -160,7 +160,8 @@ void handle_404(int clnt_sock) {
     // header에 404 code 관련 내용을 채우고 응답
     char header[BUF_SIZE];
     fill_header(header, 404, sizeof(NOT_FOUNT_CONTENT), "text/html");
-    
+	printf("%s\n", header);
+
     write(clnt_sock, header, strlen(header));
     write(clnt_sock, NOT_FOUNT_CONTENT, sizeof(NOT_FOUNT_CONTENT));
 }
@@ -169,7 +170,8 @@ void handle_500(int clnt_sock) {
     // header에 500 code 관련 내용을 채우고 응답
     char header[BUF_SIZE];
     fill_header(header, 500, sizeof(SERVER_ERROR_CONTENT), "text/html");
-    
+    printf("%s\n", header);
+
     write(clnt_sock, header, strlen(header));
     write(clnt_sock, SERVER_ERROR_CONTENT, sizeof(SERVER_ERROR_CONTENT));
 }
