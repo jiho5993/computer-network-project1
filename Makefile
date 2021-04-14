@@ -1,6 +1,12 @@
-all: server.c client.c
-	gcc -o server server.c
-	gcc -o client client.c
+CC = gcc
+OBJ = server.o
+TARGET = server
+
+all: $(TARGET)
+
+$(TARGET): $(OBJ)
+	$(CC) -o $@ $(OBJ)
 
 clean:
-	rm server client
+	rm -f *.o
+	rm -f $(TARGET)
