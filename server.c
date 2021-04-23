@@ -12,8 +12,8 @@
 #define BUF_SIZE                65536
 #define NEW_LOG_LINE            "========================== REQUEST\n"
 #define HEADER_FORMAT           "HTTP/1.1 %d %s\nContent-Length: %ld\nContent-Type: %s\n\n"
-#define NOT_FOUNT_CONTENT       "<h1>404 Not Found</h1>\n"
-#define SERVER_ERROR_CONTENT    "<h1>500 Internal Server Error</h1>\n"
+#define NOT_FOUND_404           "<h1>404 Not Found</h1>\n"
+#define SERVER_ERROR_500        "<h1>500 Internal Server Error</h1>\n"
 
 int serv_sock;  // server socket
 int clnt_sock;  // client socket
@@ -25,7 +25,7 @@ void fill_header(char *header, int status, long len, char *type);   // response 
 void find_mime(char *mime, char *uri);                              // uri를 파싱해서 MIME을 알아냄
 void error_404(int clnt_sock);                                      // 404 code 처리
 void error_500(int clnt_sock);                                      // 500 code 처리
-char *parse_for_res(char *buf, long long *ct_len);                  // response 메시지를 만들기 위한 parsing 함수
+char *parse_for_res(char *buf, long long *content_len);             // response 메시지를 만들기 위한 parsing 함수
 void http_handler(int clnt_sock);                                   // request 메시지를 읽고, response 메시지를 만들어 처리
 
 int main(int argc, char **argv) {
@@ -141,18 +141,18 @@ void fill_header(char *header, int status, long len, char *type) {
 }
 
 void find_mime(char *mime, char *uri) {
-    char *ext = strrchr(uri, '.');
+    char *ext_name = strrchr(uri, '.');
 
     // 확장자 명을 이용하여 MIME을 정해준다.
-    if(!strcmp(ext, ".html")) {
+    if(!strcmp(ext_name, ".html")) {
         strcpy(mime, "text/html");
-    } else if(!strcmp(ext, ".gif")) {
+    } else if(!strcmp(ext_name, ".gif")) {
         strcpy(mime, "image/gif");
-    } else if(!strcmp(ext, ".jpeg")) {
+    } else if(!strcmp(ext_name, ".jpeg")) {
         strcpy(mime, "image/jpeg");
-    } else if(!strcmp(ext, ".mp3")) {
+    } else if(!strcmp(ext_name, ".mp3")) {
         strcpy(mime, "audio/mpeg");
-    } else if(!strcmp(ext, ".pdf")) {
+    } else if(!strcmp(ext_name, ".pdf")) {
         strcpy(mime, "application/pdf");
     }
 }
@@ -160,24 +160,24 @@ void find_mime(char *mime, char *uri) {
 void error_404(int clnt_sock) {
     // header에 404 code 관련 내용을 채우고 응답
     char header[BUF_SIZE];
-    fill_header(header, 404, sizeof(NOT_FOUNT_CONTENT), "text/html");
+    fill_header(header, 404, sizeof(NOT_FOUND_404), "text/html");
 	printf("%s\n", header);
 
     write(clnt_sock, header, strlen(header));
-    write(clnt_sock, NOT_FOUNT_CONTENT, sizeof(NOT_FOUNT_CONTENT));
+    write(clnt_sock, NOT_FOUND_404, sizeof(NOT_FOUND_404));
 }
 
 void error_500(int clnt_sock) {
     // header에 500 code 관련 내용을 채우고 응답
     char header[BUF_SIZE];
-    fill_header(header, 500, sizeof(SERVER_ERROR_CONTENT), "text/html");
+    fill_header(header, 500, sizeof(SERVER_ERROR_500), "text/html");
     printf("%s\n", header);
 
     write(clnt_sock, header, strlen(header));
-    write(clnt_sock, SERVER_ERROR_CONTENT, sizeof(SERVER_ERROR_CONTENT));
+    write(clnt_sock, SERVER_ERROR_500, sizeof(SERVER_ERROR_500));
 }
 
-char *parse_for_res(char *buf, long long *ct_len) {
+char *parse_for_res(char *buf, long long *content_len) {
     // response message를 만들기 위해 method와 uri를 buf에서 strtok로 따로 빼낸다.
     char *method = strtok(buf, " ");    // ex) GET
     char *uri = strtok(NULL, " ");      // ex) /src/space.jpeg
@@ -202,7 +202,8 @@ char *parse_for_res(char *buf, long long *ct_len) {
         error_404(clnt_sock);
     }
 
-    *ct_len = st.st_size;
+    // Content-Length에 할당할 수 있도록 file의 stat struct를 이용한다.
+    *content_len = st.st_size;
 
     return local_uri;
 }
@@ -225,9 +226,9 @@ void http_handler(int clnt_sock) {
     write(log_fd, NEW_LOG_LINE, strlen(NEW_LOG_LINE));
     write(log_fd, buf, strlen(buf));
 
-    char mime[40];                                  // MIME (content type)
-    long long ct_len;                               // content length
-    char *local_uri = parse_for_res(buf, &ct_len);  // 요청에 따른 파일을 찾기 위한 상대적 경로
+    char mime[40];                                       // MIME (Content-Type)
+    long long content_len;                               // Content-Length
+    char *local_uri = parse_for_res(buf, &content_len);  // 요청에 따른 파일을 찾기 위한 상대적 경로
 
     // 파일의 경로를 통해 읽기 전용으로 open한다. 실패한다면 500 code를 보낸다.
     int fd = open(local_uri, O_RDONLY);
@@ -236,9 +237,9 @@ void http_handler(int clnt_sock) {
         error("failed to open file");
     }
 
-    find_mime(mime, local_uri);                 // 파일의 종류를 알아내고, MIME을 알아낸다.
-    fill_header(header, 200, ct_len, mime);     // response header를 채운다. (200 status가 고정인 이유는 위에서 이미 예외처리를 했기 때문)
-    write(clnt_sock, header, strlen(header));   // 채운 헤더를 client에게 응답
+    find_mime(mime, local_uri);                         // 파일의 종류를 알아내고, MIME을 알아낸다.
+    fill_header(header, 200, content_len, mime);        // response header를 채운다. (200 status가 고정인 이유는 위에서 이미 예외처리를 했기 때문)
+    write(clnt_sock, header, strlen(header));           // 채운 헤더를 client에게 응답
 
     printf("%s\n", header);
 
